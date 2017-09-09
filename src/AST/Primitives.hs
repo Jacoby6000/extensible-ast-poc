@@ -1,13 +1,16 @@
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE TypeInType #-}
 
 module AST.Primitives (Primitive, PrimitiveExt) where
 
 import Data.Kind
 import AST.LambdaCalc
+import AST.Core
 
-data Primitive
+data PrimitiveNode
+type Primitive = 'NodeType PrimitiveNode
 
-data family PrimitiveExt (a :: * -> *) (i :: *)
+data family PrimitiveExt (a :: NodeType -> *) (i :: NodeType)
 
 data instance PrimitiveExt a Primitive
   = PrimInt Int

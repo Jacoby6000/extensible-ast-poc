@@ -1,6 +1,6 @@
 {-# LANGUAGE TypeInType #-}
 
-module AST.Core (NodeType) where
+module AST.Core (NodeType(..)) where
 
 import Data.Kind
 

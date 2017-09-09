@@ -2,5 +2,8 @@ flags: {}
 extra-package-dbs: []
 packages:
 - '.'
-extra-deps: []
+extra-deps:
+- 'compdata-0.11'
+- 'tree-view-0.5'
+- 'QuickCheck-2.8.2'
 resolver: lts-9.3
