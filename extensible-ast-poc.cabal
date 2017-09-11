@@ -15,11 +15,15 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     AST, AST.LambdaCalc, AST.Primitives, AST.Core,
-                       AST.Alg, AST.Alg.Eval, AST.Alg.Simple
+  exposed-modules:     AST, AST.LambdaCalc, AST.Primitives
+                       AST.Alg, AST.Alg.Eval
   build-depends:       base >= 4.7,
                        compdata >= 0.11
   default-language:    Haskell2010
+  ghc-options:
+    -Wall
+
+
 
 source-repository head
   type:     git

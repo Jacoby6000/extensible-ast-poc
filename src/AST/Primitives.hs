@@ -1,15 +1,15 @@
-{-# LANGUAGE TypeFamilies     #-}
-{-# LANGUAGE TypeInType       #-}
-{-# LANGUAGE GADTs            #-}
-{-# LANGUAGE TemplateHaskell  #-}
-{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE TypeInType            #-}
+{-# LANGUAGE GADTs                 #-}
+{-# LANGUAGE TemplateHaskell       #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 
 module AST.Primitives (Primitive, PrimExt(..)) where
 
-import Data.Kind
 import AST.LambdaCalc
-import AST.Core
-import qualified Data.Comp.Multi
+import AST.Alg.Eval
 import Data.Comp.Multi.Derive
 
 
@@ -22,4 +22,8 @@ data PrimExt a i where
 $(derive [makeHFunctor, makeHFoldable, makeHTraversable, makeShowHF, makeEqHF,
           makeOrdHF, smartConstructors, smartAConstructors]
           [''PrimExt])
+
+instance Eval PrimExt String where
+  evalAlg (PrimInt n) = Evaluated (show n)
+  evalAlg (PrimTerm (Evaluated n)) = Evaluated n
 
