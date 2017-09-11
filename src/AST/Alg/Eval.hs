@@ -12,7 +12,7 @@ import Data.Comp.Multi hiding (Term)
 import qualified Data.Comp.Multi (Term)
 import Data.Comp.Multi.Derive
 
-newtype Evaluated o i = Evaluated String
+newtype Evaluated o i = Evaluated o
 
 class Eval f o where
   evalAlg :: Alg f (Evaluated o)
