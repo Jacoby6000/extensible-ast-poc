@@ -1,7 +1,7 @@
-module AST where
+module AST (module X) where
 
-import AST.Core
-import AST.LambdaCalc
-import AST.Primitives
-import AST.Eval
+import AST.Core as X
+import AST.LambdaCalc as X
+import AST.Primitives as X
+import AST.Alg as X
 

@@ -1,22 +1,25 @@
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE TypeInType #-}
+{-# LANGUAGE TypeFamilies     #-}
+{-# LANGUAGE TypeInType       #-}
+{-# LANGUAGE GADTs            #-}
+{-# LANGUAGE TemplateHaskell  #-}
+{-# LANGUAGE FlexibleContexts #-}
 
-module AST.Primitives (Primitive, PrimitiveExt) where
+module AST.Primitives (Primitive, PrimExt(..)) where
 
 import Data.Kind
 import AST.LambdaCalc
 import AST.Core
+import qualified Data.Comp.Multi
+import Data.Comp.Multi.Derive
 
-data PrimitiveNode
-type Primitive = 'NodeType PrimitiveNode
 
-data family PrimitiveExt (a :: NodeType -> *) (i :: NodeType)
+data Primitive
 
-data instance PrimitiveExt a Primitive
-  = PrimInt Int
-  | PrimStr String
+data PrimExt a i where
+  PrimInt :: Int -> PrimExt a Primitive
+  PrimTerm :: a Primitive -> PrimExt a Term
 
-data instance PrimitiveExt a Term
-  = PrimTerm (a Primitive)
-
+$(derive [makeHFunctor, makeHFoldable, makeHTraversable, makeShowHF, makeEqHF,
+          makeOrdHF, smartConstructors, smartAConstructors]
+          [''PrimExt])
 

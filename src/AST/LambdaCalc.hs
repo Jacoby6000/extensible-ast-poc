@@ -1,23 +1,27 @@
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE TypeInType #-}
+{-# LANGUAGE TypeFamilies     #-}
+{-# LANGUAGE TypeInType       #-}
+{-# LANGUAGE GADTs            #-}
+{-# LANGUAGE TemplateHaskell  #-}
+{-# LANGUAGE FlexibleContexts #-}
 
-module AST.LambdaCalc (Symbol, LamCalc, Term) where
+
+module AST.LambdaCalc (Symbol, LamCalc(..), Term) where
 
 import Data.Kind
 import AST.Core
-import Data.Comp.Multi
+import qualified Data.Comp.Multi
+import Data.Comp.Multi.Derive
 
-data TermNode
-type Term = 'NodeType TermNode
+data Term
 
 type Symbol = String
 
-data family LamCalc (a :: NodeType -> *) (i :: NodeType)
+data LamCalc a i where
+  Lam :: Symbol -> a Term -> LamCalc a Term
+  Var :: Symbol -> LamCalc a Term
+  App :: a Term -> a Term -> LamCalc a Term
 
-data instance LamCalc a Term
-  = Lam Symbol (a Term)
-  | Var Symbol
-  | App (a Term) (a Term)
-
-instance HFunctor LamCalc where
+$(derive [makeHFunctor, makeHFoldable, makeHTraversable, makeShowHF, makeEqHF,
+          makeOrdHF, smartConstructors, smartAConstructors]
+          [''LamCalc])
 

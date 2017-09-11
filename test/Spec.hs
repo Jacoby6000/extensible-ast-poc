@@ -1,2 +1,4 @@
+import AST
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = putStrLn (show (exprAsString (Lam "x" (PrimInt 5))))

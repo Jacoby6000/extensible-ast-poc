@@ -1,7 +1,5 @@
 {-# LANGUAGE TypeInType #-}
 
-module AST.Core (NodeType(..)) where
+module AST.Core () where
 
 import Data.Kind
-
-newtype NodeType = NodeType Type
